@@ -16,7 +16,7 @@ self.addEventListener("install", (event) => {
 
 // Listen for requests
 self.addEventListener("fetch", (event) => {
-  event.resppondWith(
+  event.respondWith(
     caches.match(event.request).then(() => {
       return fetch(event.request).catch(() => caches.match("offline.html"));
     }),
@@ -26,13 +26,13 @@ self.addEventListener("fetch", (event) => {
 // Activate the service worker
 self.addEventListener("activate", (event) => {
   const cacheWhitelist = [];
-  cacheWhiteList.push(CACHE_NAME);
+  cacheWhitelist.push(CACHE_NAME);
 
   event.waitUntil(
     caches.keys().then((cacheNames) =>
       Promise.all(
         cacheNames.map((cacheName) => {
-          if (!cacheWhiteList.includes(cacheName)) {
+          if (!cacheWhitelist.includes(cacheName)) {
             return caches.delete(cacheName);
           }
         }),
